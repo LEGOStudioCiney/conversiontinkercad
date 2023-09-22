@@ -1,15 +1,74 @@
 <!DOCTYPE html>
 <html>
+<head>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Mooli:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Mooli', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1abc9c; /* Couleur de fond de Tinkercad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 3em;
+    display: inline-block;
+    border: 2px solid #333;
+    border-radius: 50%;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+h2 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
 <body>
 
-<h2>Importez un fichier SVG</h2>
-<input type="file" id="myFile" accept=".svg">
-<br>
-<label for="strokeWidth">Entrez la nouvelle épaisseur de ligne :</label>
-<input type="text" id="strokeWidth" name="strokeWidth" value="0.1mm">
-<br>
-<button onclick="loadFile()">Charger le fichier</button>
-<button onclick="downloadSVG()">Télécharger le fichier modifié</button>
+<div class="container">
+    <div class="logo">〰️</div>
+    <h1>MakerHUB édu : assistant SVG Tinkercad</h1>
+    <p>Cet outil a été créé pour résoudre un problème courant rencontré lors de l'exportation de fichiers SVG depuis Tinkercad pour une utilisation avec Cricut. Les fichiers SVG exportés depuis Tinkercad peuvent sembler visuellement vides car ils sont optimisés pour les flux de travail de découpe au laser, avec une épaisseur de ligne "hairline" de 0,001 mm. Cet outil vous permet d'importer un fichier SVG, d'augmenter l'épaisseur de la ligne à une valeur plus épaisse, comme 0,1 mm, et d'exporter le fichier SVG modifié.</p>
+    <h2>Importez un fichier SVG</h2>
+    <input type="file" id="myFile" accept=".svg">
+    <br>
+    <label for="strokeWidth">Entrez la nouvelle épaisseur de ligne :</label>
+    <input type="text" id="strokeWidth" name="strokeWidth" value="0.1mm">
+    <br>
+    <button onclick="loadFile()">Charger le fichier</button>
+    <button onclick="downloadSVG()">Télécharger le fichier modifié</button>
+</div>
 
 <script>
 let svgText = '';
@@ -19,7 +78,7 @@ function loadFile() {
     let reader = new FileReader();
     reader.onload = function(e) {
         svgText = e.target.result;
-        let newStrokeWidth = document.getElementById('strokeWidth').value;
+        let newStrokeWidth = document.getElementById('strokeWidth').value + "mm";
         svgText = svgText.replace(/stroke-width="0.001mm"/g, 'stroke-width="' + newStrokeWidth + '"');
         alert('Le fichier a été chargé et modifié avec succès.');
     };
