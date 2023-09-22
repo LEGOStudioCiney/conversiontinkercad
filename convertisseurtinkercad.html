@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Importez un fichier SVG</h2>
+<input type="file" id="myFile" accept=".svg">
+<br>
+<label for="strokeWidth">Entrez la nouvelle épaisseur de ligne :</label>
+<input type="text" id="strokeWidth" name="strokeWidth" value="0.1mm">
+<br>
+<button onclick="loadFile()">Charger le fichier</button>
+<button onclick="downloadSVG()">Télécharger le fichier modifié</button>
+
+<script>
+let svgText = '';
+
+function loadFile() {
+    let file = document.getElementById('myFile').files[0];
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        svgText = e.target.result;
+        let newStrokeWidth = document.getElementById('strokeWidth').value;
+        svgText = svgText.replace(/stroke-width="0.001mm"/g, 'stroke-width="' + newStrokeWidth + '"');
+        alert('Le fichier a été chargé et modifié avec succès.');
+    };
+    reader.readAsText(file);
+}
+
+function downloadSVG() {
+    let blob = new Blob([svgText], {type: 'image/svg+xml'});
+    let url = URL.createObjectURL(blob);
+    let link = document.createElement('a');
+    link.href = url;
+    link.download = 'modified.svg';
+    link.click();
+    URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
